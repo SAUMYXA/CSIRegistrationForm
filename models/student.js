@@ -1,10 +1,10 @@
-const mongoose=require('mongoose');;
+const mongoose=require('mongoose');
 const StudentSchema=mongoose.Schema({
     name:{
         type:String,
         required:true,
     },
-    class:{
+    section:{
         type:String,
         required:true,
     },
@@ -24,6 +24,10 @@ const StudentSchema=mongoose.Schema({
         type:Number,
         required:true,
     },
+    email:{
+        type:String,
+        required:true
+    }
 
 },
 {
