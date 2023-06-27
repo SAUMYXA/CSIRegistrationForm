@@ -24,12 +24,20 @@ const StudentSchema=mongoose.Schema({
     phoneNo:{
         type:Number,
         required:true,
-        min:10,
-        max:10,
     },
     email:{
         type:String,
-        required:true
+        required:true,
+    },
+    gender:{
+        type:String,
+        required:true,
+        enum:["Female","Male"],
+    },
+    hostler:{
+        type:String,
+        required:true,
+        enum:["YES","NO"]
     }
 
 },

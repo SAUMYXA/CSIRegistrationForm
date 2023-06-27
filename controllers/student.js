@@ -1,7 +1,7 @@
 const asyncHandler=require('express-async-handler');
 const Students=require("../models/student")
 const registerStudent=asyncHandler(async(req,res)=>{
-    const{name,section,branch,studentNo,registrationNo,phoneNo,email}=req.body;
+    const{name,section,branch,studentNo,registrationNo,phoneNo,email,gender,hostler}=req.body;
     if(!registrationNo||!studentNo){
         res.status(400).json({msg:"fill all the credentials!"})
     }
@@ -12,7 +12,9 @@ const registerStudent=asyncHandler(async(req,res)=>{
         studentNo,
         registrationNo,
         phoneNo,
-        email
+        email,
+        gender,
+        hostler
     })
     res.status(201).json({msg:"New student details added successfully",createStudent})
 })
