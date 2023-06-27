@@ -21,5 +21,11 @@ router.get('/',async(req,res)=>{
     const allStudents=await Students.find({})
     res.status(201).json({allStudents})
 })
-
+router.get('/find/:studentNo',async(req,res)=>{
+const student=  await Students.findOne({studentNo:req.body.studentNo})
+if(!student) {
+    res.status(401).json({msg:"Student dosen't exist"})
+}
+res.status(201).json({student})  
+})
 module.exports=router;
