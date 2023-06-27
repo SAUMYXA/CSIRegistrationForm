@@ -17,5 +17,9 @@ router.post('/register', async(req,res)=>{
     })
     res.status(201).json({msg:"New student details added successfully",createStudent})
 })
+router.get('/',async(req,res)=>{
+    const allStudents=await Students.find({})
+    res.status(201).json({allStudents})
+})
 
 module.exports=router;
