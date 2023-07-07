@@ -1,6 +1,7 @@
 const nodemailer=require('nodemailer');
 const asyncHandler=require('express-async-handler');
 const Students=require("../models/student")
+require('dotenv').config();
 const registerStudent=asyncHandler(async(req,res)=>{
     const{name,section,branch,studentNo,registrationNo,phoneNo,email,gender,hostler}=req.body;
     if(!registrationNo||!studentNo){
@@ -32,15 +33,15 @@ const findStudent=asyncHandler(async(req,res)=>{
     })
 const sendMail=asyncHandler(async(req,res)=>{
     const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
+        host: 'smtp.gmail.com',
         port: 587,
         auth: {
-            user: 'brandy.bradtke95@ethereal.email',
-            pass: 'XaX1YtcxNWhN1r781H'
+            user: process.env.EMAIL,
+            pass: process.env.PASSWORD
         }
     });
       let info=await transporter.sendMail({
-        from: '"Saumya Srivastava" <brandy.bradtke95@ethereal.email>', 
+        from: '"Saumya Srivastava" <saumya2113061@akgec.ac.in>', 
     to: "saumya.srivastava957@gmail.com", 
     subject: "Hello ✔", 
     text: "Hello world?", 
