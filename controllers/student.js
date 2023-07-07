@@ -40,9 +40,10 @@ const sendMail=asyncHandler(async(req,res)=>{
             pass: process.env.PASSWORD
         }
     });
+    const email=req.body.email;
       let info=await transporter.sendMail({
         from: '"Saumya Srivastava" <saumya2113061@akgec.ac.in>', 
-    to: "saumya.srivastava957@gmail.com", 
+    to: email, 
     subject: "Hello ✔", 
     text: "Hello world?", 
     html: "<b>Hello world?</b>",
