@@ -7,6 +7,10 @@ const registerStudent=asyncHandler(async(req,res)=>{
     if(!registrationNo||!studentNo){
         res.status(400).json({msg:"fill all the credentials!"})
     }
+    const userAvailable=await Students.findOne({email})
+    if(userAvailable){
+        res.status(400).json({msg:"you have already logged in. Check your email"})
+    }
     const createStudent=await Students.create({
         name,
         section,
