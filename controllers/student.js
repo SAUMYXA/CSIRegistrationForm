@@ -7,25 +7,25 @@ const request=require('request')
 let createStudent;
 const registerStudent=asyncHandler(async(req,res)=>{
     const{name,section,branch,studentNo,registrationNo,phoneNo,email,gender,hostler}=req.body;
-    // if(!registrationNo||!studentNo){
-    //     res.status(400).json({msg:"fill all the credentials!"})
-    // }
-    // if(
-    //     req.body.captcha===undefined||
-    //     req.body.captcha===''||
-    //     req.body.captcha===null
-    // ){
-    //     return res.json({"success":false,"msg":"Please select captcha"});
-    // }const secretkey=process.env.SECRET_KEY
-    // const verifyurl='https://google.com/recaptcha/api/siteverify?secret=${secretkey}&response=${req.body.captcha}&remoteip=${req.connection.remoteAddress}'
-    // request(verifyurl,(err,response,body)=>{
-    //     body=JSON.parse(body)
+    if(!registrationNo||!studentNo){
+        res.status(400).json({msg:"fill all the credentials!"})
+    }
+    if(
+        req.body.captcha===undefined||
+        req.body.captcha===''||
+        req.body.captcha===null
+    ){
+        return res.json({"success":false,"msg":"Please select captcha"});
+    }const secretkey=process.env.SECRET_KEY
+    const verifyurl='https://google.com/recaptcha/api/siteverify?secret=${secretkey}&response=${req.body.captcha}&remoteip=${req.connection.remoteAddress}'
+    request(verifyurl,(err,response,body)=>{
+        body=JSON.parse(body)
 
-    //     if(body.success!==undefined &&!body.success){
-    //         return res.json({"success":false,"msg":"Failed captcha verification"});  
-    //     }
-    //     return res.json({"success":true,"msg":"Captcha passed"});
-    // })
+        if(body.success!==undefined &&!body.success){
+            return res.json({"success":false,"msg":"Failed captcha verification"});  
+        }
+        return res.json({"success":true,"msg":"Captcha passed"});
+    })
     const userAvailable=await Students.findOne({email})
     if(userAvailable){
         res.status(400).json({msg:"you have already registered. Check your email"})
