@@ -68,7 +68,7 @@ const sendMail=asyncHandler(async(req,res,studentId)=>{
         }
     });
 let email=req.body.email;
-// let id=Students._id;
+let Studentid=Students._id;
 // const verificationLink = `http://localhost:5000/verify/verify?id=${studentId}`;
 const verificationLink='https://csiakgec.in/'
       let info=await transporter.sendMail({
@@ -92,28 +92,34 @@ res.json(info)
 //   console.log(updatedInfo);
 //   res.redirect("https://csiakgec.in/");
 // })
-const verifyMail = asyncHandler(async (req, res) => {
-    const { id: studentId } = req.query; // Get the studentId from the request query
+// const verifyMail = asyncHandler(async (req, res) => {
+//     // const { id: studentId } = req.query; // Get the studentId from the request query
+//     // const contact=await Students.findById(req.params.id);
   
-    try {
-      // Find the student based on the provided studentId
-      const student = await Students.findById(studentId);
+//     try {
+//       // Find the student based on the provided studentId
+//       const student = await Students.findById(studentId);
   
-    //   if (!student) {
-    //     return res.status(400).json({ msg: "Invalid verification link." });
-    //   }
+//     //   if (!student) {
+//     //     return res.status(400).json({ msg: "Invalid verification link." });
+//     //   }
   
-      // Update the is_verified field to 1
-      student.is_verified = 1;
-      await student.save();
+//       // Update the is_verified field to 1
+//       student.is_verified = 1;
+//       await student.save();
   
-      // Redirect the user to a success page or any other desired destination
-      res.redirect("https://csiakgec.in/");
-    } catch (error) {
+//       // Redirect the user to a success page or any other desired destination
+//       res.redirect("https://csiakgec.in/");
+//     } catch (error) {
       
-      res.status(500).json({ error: 'Verification failed.' });
-    }
-  });
+//       res.status(500).json({ error: 'Verification failed.' });
+//     }
+//   });
+const verifyMail=asyncHandler(async (req, res) => {
+    await Students.findByIdAndUpdate(req.params.id, { is_verified: 1 }, { new: true });
+
+    res.status(201).json({msg:"Email has been verified"})
+})
   
 
     module.exports={registerStudent,getStudents,findStudent,sendMail,verifyMail}
