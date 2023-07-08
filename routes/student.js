@@ -5,5 +5,5 @@ router.post('/register',registerStudent)
 router.get('/',getStudents)
 router.get('/find/:studentNo',findStudent)
 router.get('/sendEmail',sendMail)
-router.get('/verify',verifyMail)
+router.get('/verify/:id',verifyMail)
 module.exports=router;

@@ -42,7 +42,8 @@ const registerStudent=asyncHandler(async(req,res)=>{
         hostler,
         is_verified:0
     })
-    sendMail(req.body.email,createStudent._id);
+    sendMail(req, res, createStudent._id)
+    // sendMail(req.body.email,createStudent._id);
     res.status(201).json({msg:"New student details added successfully. Kindly check your mail",createStudent})
 })
 const  getStudents= asyncHandler(async(req,res)=>{
@@ -56,7 +57,7 @@ const findStudent=asyncHandler(async(req,res)=>{
     }
     res.status(201).json({student})  
     })
-const sendMail=asyncHandler(async(req,res)=>{
+const sendMail=asyncHandler(async(req,res,studentId)=>{
     const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
@@ -66,8 +67,9 @@ const sendMail=asyncHandler(async(req,res)=>{
         }
     });
 let email=req.body.email;
-let id=Students._id;
-const verificationLink = `http://localhost:5000/verify/${studentId}`;
+// let id=Students._id;
+// const verificationLink = `http://localhost:5000/verify/verify?id=${studentId}`;
+const verificationLink='https://csiakgec.in/'
       let info=await transporter.sendMail({
         from: '"Saumya Srivastava" <saumya2113061@akgec.ac.in>', 
     to: email, 
@@ -79,10 +81,38 @@ const verificationLink = `http://localhost:5000/verify/${studentId}`;
       console.log("Message sent: %s",info.messageId);
 res.json(info)
 })
-const verifyMail=asyncHandler(async(req,res)=>{
-  const updatedInfo=await Students.updateOne({_id:req.query.id},{$set:{is_verified:1}})
-  console.log(updatedInfo);
-  res.redirect("https://csiakgec.in/")
-})
+// const verifyMail=asyncHandler(async(req,res)=>{
+// //   const updatedInfo=await Students.updateOne({_id:req.query.id},{$set:{is_verified:1}})
+// //   console.log(updatedInfo);
+// //   res.redirect("https://csiakgec.in/")
+// const studentId = req.query.id; 
+//   const updatedInfo = await Students.updateOne({ _id: studentId }, { $set: { is_verified: 1 } });
+
+//   console.log(updatedInfo);
+//   res.redirect("https://csiakgec.in/");
+// })
+const verifyMail = asyncHandler(async (req, res) => {
+    const { id: studentId } = req.query; // Get the studentId from the request query
+  
+    try {
+      // Find the student based on the provided studentId
+      const student = await Students.findById(studentId);
+  
+    //   if (!student) {
+    //     return res.status(400).json({ msg: "Invalid verification link." });
+    //   }
+  
+      // Update the is_verified field to 1
+      student.is_verified = 1;
+      await student.save();
+  
+      // Redirect the user to a success page or any other desired destination
+      res.redirect("https://csiakgec.in/");
+    } catch (error) {
+      
+      res.status(500).json({ error: 'Verification failed.' });
+    }
+  });
+  
 
     module.exports={registerStudent,getStudents,findStudent,sendMail,verifyMail}
