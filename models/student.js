@@ -38,11 +38,17 @@ const StudentSchema=mongoose.Schema({
         type:String,
         required:true,
         enum:["YES","NO"]
+    },
+    captcha:{
+        type:String,
+        required:true,
     }
 
 },
 {
     timestamps:true
 })
-
+//token
+//verify
+//link dhundho jo bhejni hai
 module.exports=mongoose.model("Students",StudentSchema)
