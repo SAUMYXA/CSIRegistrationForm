@@ -10,22 +10,7 @@ const registerStudent=asyncHandler(async(req,res)=>{
     if(!registrationNo||!studentNo){
         res.status(400).json({msg:"fill all the credentials!"})
     }
-    if(
-        req.body.captcha===undefined||
-        req.body.captcha===''||
-        req.body.captcha===null
-    ){
-        return res.json({"success":false,"msg":"Please select captcha"});
-    }const secretkey=process.env.SECRET_KEY
-    const verifyurl='https://google.com/recaptcha/api/siteverify?secret=${secretkey}&response=${req.body.captcha}&remoteip=${req.connection.remoteAddress}'
-    request(verifyurl,(err,response,body)=>{
-        body=JSON.parse(body)
-
-        if(body.success!==undefined &&!body.success){
-            return res.json({"success":false,"msg":"Failed captcha verification"});  
-        }
-        return res.json({"success":true,"msg":"Captcha passed"});
-    })
+    
     const userAvailable=await Students.findOne({email})
     if(userAvailable){
         res.status(400).json({msg:"you have already registered. Check your email"})
@@ -41,6 +26,22 @@ const registerStudent=asyncHandler(async(req,res)=>{
         gender,
         hostler,
         is_verified:0
+    })
+    if(
+        req.body.captcha===undefined||
+        req.body.captcha===''||
+        req.body.captcha===null
+    ){
+        return res.json({"success":false,"msg":"Please select captcha"});
+    }const secretkey=process.env.SECRET_KEY
+    const verifyurl='https://google.com/recaptcha/api/siteverify?secret=${secretkey}&response=${req.body.captcha}&remoteip=${req.connection.remoteAddress}'
+    request(verifyurl,(err,response,body)=>{
+        body=JSON.parse(body)
+
+        if(body.success!==undefined &&!body.success){
+            return res.json({"success":false,"msg":"Failed captcha verification"});  
+        }
+        return res.json({"success":true,"msg":"Captcha passed"});
     })
     sendMail(req, res, createStudent._id)
     // sendMail(req.body.email,createStudent._id);
