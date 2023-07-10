@@ -52,7 +52,5 @@ const StudentSchema=mongoose.Schema({
 {
     timestamps:true
 })
-//token
-//verify
-//link dhundho jo bhejni hai
+
 module.exports=mongoose.model("Students",StudentSchema)
