@@ -3,7 +3,8 @@ const asyncHandler = require("express-async-handler");
 const Students = require("../models/student");
 require("dotenv").config();
 const request = require("request");
-
+const multer=require('multer');
+const path=require('path')
 let createStudent;
 const registerStudent = asyncHandler(async (req, res) => {
   const {
@@ -154,11 +155,24 @@ const verifyMail = asyncHandler(async (req, res) => {
 
   res.status(201).json({ msg: "Email has been verified" });
 });
+// const uploadStudent=asyncHandler(async(req,res)=>{
+//     const storage=multer.diskStorage({
+//         destination:(req,file,cb)=>{
+//             cb(null,'Images')
+//         },
+//         filename:(req,file,cb)=>{
+//             console.log(file),
+//             cb(null,Date.now()+path.extname(file.originalname))
+//         }
+//     })
+//     const upload=multer({storage:storage})
 
+// })
 module.exports = {
   registerStudent,
   getStudents,
   findStudent,
   sendMail,
   verifyMail,
+  
 };
