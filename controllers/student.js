@@ -103,8 +103,8 @@ const sendMail = asyncHandler(async (req, res, studentId) => {
         content:"This is a file"
     },
     {
-        filename:"file.pdf",
-        path:"https://www.shutterstock.com/explore/royalty-free-images"
+        filename:"image.jpg",
+        path:"image.jpg"
     }
   ]
 });
