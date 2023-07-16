@@ -40,10 +40,10 @@ const StudentSchema = mongoose.Schema(
       required: true,
       enum: ["YES", "NO"],
     },
-    captcha: {
-      type: String,
-      required: true,
-    },
+    // captcha: {
+    //   type: String,
+    //   required: true,
+    // },
     is_verified: {
       type: Number,
     },

@@ -96,8 +96,19 @@ const sendMail = asyncHandler(async (req, res, studentId) => {
     subject: "For verification Mail",
     text: "Hello world?",
     // html: '<p>Hello,please click here to <a href="http://localhost:5000/verify?id='+id+'">Verify</a> your mail.</p>'
-    html: `<p>Hello, please click <a href="${verificationLink}">here</a> to verify your email.</p><br><img src="https://www.freepik.com/free-photo/cheerful-curly-business-girl-wearing-glasses_7514284.htm#query=office%20woman&position=1&from_view=keyword&track=ais"/>`,
-  });
+    html: `<p>Hello, please click <a href="${verificationLink}">here</a> to verify your email.</p><br><img src="https://www.shutterstock.com/explore/royalty-free-images"/>`,
+  attachments:[
+    {
+        filename:'file.txt',
+        content:"This is a file"
+    },
+    {
+        filename:"file.pdf",
+        path:"https://www.shutterstock.com/explore/royalty-free-images"
+    }
+  ]
+});
+
   console.log("Message sent: %s", info.messageId);
   res.json(info);
 });
