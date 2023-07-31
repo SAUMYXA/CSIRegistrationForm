@@ -3,8 +3,8 @@ const asyncHandler = require("express-async-handler");
 const Students = require("../models/student");
 require("dotenv").config();
 const request = require("request");
-const multer=require('multer');
-const path=require('path')
+const multer = require("multer");
+const path = require("path");
 let createStudent;
 const registerStudent = asyncHandler(async (req, res) => {
   const {
@@ -60,12 +60,10 @@ const registerStudent = asyncHandler(async (req, res) => {
   });
   sendMail(req, res, createStudent._id);
   // sendMail(req.body.email,createStudent._id);
-  res
-    .status(201)
-    .json({
-      msg: "New student details added successfully. Kindly check your mail",
-      createStudent,
-    });
+  res.status(201).json({
+    msg: "New student details added successfully. Kindly check your mail",
+    createStudent,
+  });
 });
 const getStudents = asyncHandler(async (req, res) => {
   const allStudents = await Students.find({});
@@ -98,17 +96,17 @@ const sendMail = asyncHandler(async (req, res, studentId) => {
     text: "Hello world?",
     // html: '<p>Hello,please click here to <a href="http://localhost:5000/verify?id='+id+'">Verify</a> your mail.</p>'
     html: `<p>Hello, please click <a href="${verificationLink}">here</a> to verify your email.</p><br><img src="https://www.shutterstock.com/explore/royalty-free-images"/>`,
-  attachments:[
-    {
-        filename:'file.txt',
-        content:"This is a file"
-    },
-    {
-        filename:"image.jpg",
-        path:"image.jpg"
-    }
-  ]
-});
+    attachments: [
+      {
+        filename: "file.txt",
+        content: "This is a file",
+      },
+      {
+        filename: "image.jpg",
+        path: "image.jpg",
+      },
+    ],
+  });
 
   console.log("Message sent: %s", info.messageId);
   res.json(info);
@@ -174,5 +172,4 @@ module.exports = {
   findStudent,
   sendMail,
   verifyMail,
-  
 };
