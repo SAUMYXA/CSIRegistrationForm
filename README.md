@@ -12,4 +12,4 @@ Welcome to the Registration Form API! This API provides endpoints for managing s
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/registration-form-api.git
+   git clone https://github.com/SAUMYXA/CSIRegistrationForm.git
